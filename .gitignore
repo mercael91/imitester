@@ -1,0 +1,11 @@
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+imitester_screenshots/
+shots/
+shots_*/
+*.log
+project.json
+.env
+.DS_Store

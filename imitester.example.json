@@ -1,0 +1,65 @@
+{
+  "name": "Мой проект",
+  "base_url": "https://app.example.com",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "screenshot_dir": "imitester_screenshots",
+  "timeout_ms": 20000,
+  "slow_mo_ms": 0,
+  "login": {
+    "enabled": true,
+    "url": "/login",
+    "steps": [
+      {
+        "fill": "input[name='email']",
+        "value": "user@example.com"
+      },
+      {
+        "fill": "input[name='password']",
+        "value_env": "IMITEST_PASSWORD"
+      },
+      {
+        "click": "button[type='submit']"
+      },
+      {
+        "wait_url": "**/dashboard*"
+      },
+      {
+        "wait_text": "Дашборд"
+      }
+    ]
+  },
+  "sections": [
+    {
+      "name": "home",
+      "url": "/"
+    },
+    {
+      "name": "chat",
+      "url": "/chat",
+      "settle_ms": 60000
+    },
+    {
+      "name": "settings",
+      "url": "/settings"
+    }
+  ],
+  "skip_click_regex": "удал|delete|выход|logout|sign out|оплатить|pay|опубликовать|publish",
+  "ssh": {
+    "enabled": false,
+    "host": "10.0.0.10",
+    "user": "deploy",
+    "key": "~/.ssh/id_ed25519",
+    "port": 22,
+    "sudo": false,
+    "allow_restart": false
+  },
+  "services": {
+    "backend": "systemctl restart backend",
+    "frontend": "systemctl restart frontend"
+  },
+  "project_path": "/opt/app",
+  "http_credentials": null
+}

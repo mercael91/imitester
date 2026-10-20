@@ -1,0 +1,15 @@
+<!doctype html><html lang="ru"><head><meta charset="utf-8"><title>Имитест фикстура</title>
+<style>body{font-family:sans-serif;max-width:900px;margin:20px auto}button{padding:6px 10px}</style></head>
+<body><h1>Демо-стенд имитеста</h1>
+<nav><a href="/about.html">О проекте</a> | <a href="/login.html">Войти</a> | <a href="/missing.html">Битая ссылка</a></nav>
+<p>Страница для проверки тестера.</p>
+<img src="/logo.png" width="80" height="30">
+<form><label for="q">Поиск</label><input id="q" name="q" placeholder="что искать"><button type="button" id="toast">Показать тост</button></form>
+<button id="danger">Удалить всё</button>
+<div id="out"></div>
+<script>
+document.getElementById('toast').addEventListener('click', () => {
+  document.getElementById('out').textContent = 'Тост показан ' + new Date().toISOString().slice(11,19);
+});
+document.getElementById('danger').addEventListener('click', () => { document.body.dataset.deleted = '1'; });
+</script></body></html>
