@@ -39,7 +39,7 @@ E2E-проверки веб-приложений: видимый браузер 
 ## Быстрый старт
 
 ```bash
-pip install playwright paramiko
+pip install "playwright>=1.40" "paramiko>=3.4"
 playwright install chromium
 
 # 1. Скопировать пример конфига и поправить под проект
@@ -112,8 +112,7 @@ cp /tmp/imitester/imitester.py ~/.hermes/skills/software-development/simulation-
     {"name": "chat", "url": "/chat", "settle_ms": 60000}
   ],
   "skip_click_regex": "удал|delete|выход|logout|оплатить|pay",
-  "ssh": {"enabled": false, "host": "", "user": "", "key": "~/.ssh/id_ed25519",
-          "sudo": false, "allow_restart": false},
+  "ssh": {"enabled": false, "host": "", "user": "", "allow_restart": false},
   "services": {"backend": "systemctl restart backend"}
 }
 ```

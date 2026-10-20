@@ -1,10 +1,12 @@
 ---
 name: simulation-testing
 description: >
-  Имитест — автономное E2E-тестирование с самолечением.
-  Visible-браузер (Playwright), умные селекторы, диагностика ошибок по SSH,
-  сквозной отчёт. Без привязки к проектам.
+  Имитест: E2E-прогон веб-приложения видимым браузером.
+  Playwright, самовосстанавливающиеся селекторы, отчёт в JSON.
 category: software-development
+version: 2.0
+author: Григорий Федоренко (mercael)
+license: MIT
 tags:
   - e2e
   - qa
@@ -21,11 +23,27 @@ tags:
 # 🧪 Имитест — универсальный E2E-тестер
 
 Пользователь говорит «имитест» — агент сам разбирается в проекте и прогоняет его
-видимым браузером. Скрипт: [`imitester.py`](imitester.py).
+видимым браузером. Скрипт: [imitester.py](https://github.com/mercael91/imitester/blob/main/imitester.py).
 
 **Границы публикации.** В репозиторий входят только `SKILL.md`, `imitester.py`,
 `imitester.example.json`, `selftest/`, `README.md`, `LICENSE`. Проектные заметки,
 конфиги и доступы не публикуются никогда.
+
+---
+
+## Установка
+
+```bash
+# 1) скрипт и пример конфига
+git clone https://github.com/mercael91/imitester.git
+cd imitester
+
+# 2) как навык Hermes (только SKILL.md)
+hermes skills install https://raw.githubusercontent.com/mercael91/imitester/main/SKILL.md
+
+# либо вручную: SKILL.md — в каталог навыков профиля, imitester.py — рядом
+```
+Требуется Python 3.10+ и браузер Playwright (`playwright install chromium`).
 
 ---
 
@@ -170,9 +188,8 @@ imitester.py
     {"name": "chat", "url": "/chat", "settle_ms": 60000}
   ],
   "skip_click_regex": "удал|delete|выход|logout|оплатить|pay",
-  "ssh": {"enabled": false, "host": "", "user": "", "key": "~/.ssh/id_ed25519",
-          "sudo": false, "allow_restart": false},
-  "services": {"backend": "systemctl restart backend"},
+  "ssh": {"enabled": false, "host": "", "user": "", "allow_restart": false},
+  "services": {"backend": "перезапуск backend"},
   "project_path": "/opt/app"
 }
 ```
@@ -208,7 +225,7 @@ strategies = [role button, role link, role heading,
   ↓ SSH → journalctl → ERROR
   ↓ классификация: MissingGreenlet / ImportError / AttributeError / ...
   ↓ grep кода → файл и первая строка совпадения
-  ↓ (опционально) restart при ssh.allow_restart=true → retest
+  ↓ (опционально) перезапуск сервиса при ssh.allow_restart=true → retest
 ```
 
 Автоматических правок кода тестер не делает: `sed` по живому проекту — это отдельное,
@@ -296,7 +313,7 @@ python selftest/run_selftest.py
 ## 🚀 Быстрый старт
 
 ```bash
-pip install playwright paramiko
+pip install "playwright>=1.40" "paramiko>=3.4"
 playwright install chromium
 
 cp imitester.example.json project.json     # поправить base_url/login/sections
